@@ -563,18 +563,7 @@ var nestedEvenSum = function(obj) {
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
-    // if (array.length === 0) {
-    //     return [];
-    // }
 
-    // var curEle;
-    // if (Array.isArray(array[0]) === true) {
-    //     curEle = flatten(array[0]);
-    // } else {
-    //     curEle = array[0];
-    // }
-
-    // return [curEle].concat(flatten(array.slice(1)));
 };
 
 // 31. Given a string, return an object containing tallies of each letter.
@@ -588,6 +577,15 @@ var letterTally = function(str, obj) {
 // compress([1,2,2,3,4,4,5,5,5]) // [1,2,3,4,5]
 // compress([1,2,2,3,4,4,2,5,5,5,4,4]) // [1,2,3,4,2,5,4]
 var compress = function(list) {
+    if (list.length === 0) {
+        return [];
+    }
+    var curList = compress(list.slice(1));
+    if (list[0] === curList[0]) {
+        return [].concat(curList);
+    } else {
+        return [list[0]].concat(curList);
+    }
 };
 
 // 33. Augment every element in a list with a new value where each element is an array
