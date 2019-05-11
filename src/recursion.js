@@ -592,6 +592,19 @@ var compress = function(list) {
 // itself.
 // augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
 var augmentElements = function(array, aug) {
+    if (array.length === 1) {
+        if (array[0].length === 0) {
+            return [[aug]];
+        } else {
+            return [[array[0][0], aug]];
+        }
+    }
+
+    if (array[0].length === 0) {
+        return [[aug]].concat(augmentElements(array.slice(1), aug)); 
+    } else {
+        return [[array[0][0], aug]].concat(augmentElements(array.slice(1), aug));
+    }
 };
 
 // 34. Reduce a series of zeroes to a single 0.
@@ -622,9 +635,48 @@ var tagCount = function(tag, node) {
 
 // 38. Write a function for binary search.
 // var array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+// input1 = [1,2,3,4,5,6]; // find 7 --> index 5
+// input3 = [-5,-4,-3,-2,-1]; // find -6 --> null
 // binarySearch(array, 5) // 5
 // https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search
-var binarySearch = function(array, target, min, max) {
+// var binarySearch = function(array, target, min, max) {
+//     if (min === undefined && max === undefined) {
+//         return binarySearch(array, target, 0, array.length);
+//     }
+//     if (min === max && array[min] !== target || max < min) {
+//         return null;
+//     }
+
+//     var mid = Math.floor((max + min) / 2);
+//     if (array[mid] === target) {
+//         return mid;
+//     } else if (target < array[mid]) {
+//         return binarySearch(array, target, min, mid - 1);
+//     } else {
+//         return binarySearch(array, target, mid + 1, max);
+//     }
+  
+// };
+
+var binarySearch = function(array, target) {
+    var mid = Math.floor(array.length / 2);
+    if (array.length === 0) {
+        return null;
+    }
+
+    if (array[mid] === target) {
+        return mid;
+    } else  if (target > array[mid]) {
+        var foundIndex = binarySearch(array.slice(mid + 1), target);
+        if (foundIndex === null) {
+            return null;
+        } else {
+            return array.slice(0, mid + 1).length + binarySearch(array.slice(mid + 1), target);
+        }
+    } else {
+        return binarySearch(array.slice(0, mid), target);
+    }
+  
 };
 
 // 39. Write a merge sort function.
