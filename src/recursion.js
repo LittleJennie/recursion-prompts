@@ -604,11 +604,10 @@ var compress = function(list) {
     if (list.length === 0) {
         return [];
     }
-    var curList = compress(list.slice(1));
-    if (list[0] === curList[0]) {
-        return [].concat(curList);
+    if (list[0] === list[1]) {
+        return [].concat(compress(list.slice(1)));
     } else {
-        return [list[0]].concat(curList);
+        return [list[0]].concat(compress(list.slice(1)));
     }
 };
 
@@ -635,6 +634,19 @@ var augmentElements = function(array, aug) {
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
 var minimizeZeroes = function(array) {
+    if (array.length === 0) {
+        return [];
+    }
+
+    if (array[0] !== 0) {
+        return [array[0]].concat(minimizeZeroes(array.slice(1)));
+    } else {
+        if (array[0] === array[1]) {
+            return [].concat(minimizeZeroes(array.slice(1)));
+        } else {
+            return [0].concat(minimizeZeroes(array.slice(1)));
+        }
+    }
 };
 
 // 35. Alternate the numbers in an array between positive and negative regardless of
