@@ -654,12 +654,46 @@ var minimizeZeroes = function(array) {
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 var alternateSign = function(array) {
+    if (array.length === 0) {
+        return [];
+    }
+
+    if (array[0] < 0) {
+        array[0] = array[0] * -1;
+    }
+    if (array[1] > 0) {
+        array[1] = array[1] * -1;
+    }
+
+    return [array[0], array[1]].concat(alternateSign(array.slice(2)));
 };
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
 // Assume all numbers are single digits (less than 10).
 // numToText("I have 5 dogs and 6 ponies"); // "I have five dogs and six ponies"
 var numToText = function(str) {
+    if (str === '') {
+        return '';
+    }
+
+    var lookUp = {
+        0: 'zero',
+        1: 'one',
+        2: 'two', 
+        3: 'tree', 
+        4: 'four',
+        5: 'five',
+        6: 'six',
+        7: 'seven',
+        8: 'eight',
+        9: 'nine'
+    }
+
+    if (Number.isNaN(Number.parseInt(str[0]))) {
+        return str[0].concat(numToText(str.slice(1)));
+    } else {
+        return lookUp[Number.parseInt(str[0])].concat(numToText(str.slice(1)));
+    }
 };
 
 
