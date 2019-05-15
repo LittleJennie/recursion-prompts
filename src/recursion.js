@@ -814,4 +814,37 @@ var mergeSort = function(array) {
 // console.log(obj2); // {a:1,b:{bb:{bbb:2}},c:3}
 // obj1 === obj2 // false
 var clone = function(input) {
+    if (Array.isArray(input)) {
+        if (input.length === 0) {
+            return [];
+        }
+
+        if (Array.isArray(input[0])) {
+            return [clone(input[0])].concat(clone(input.slice(1)));
+        } else {
+            if (typeof input[0] === 'object') {
+                return [clone(input[0])].concat(clone(input.slice(1)));
+            } else {
+                return [input[0]].concat(clone(input.slice(1)));
+            }
+        }
+    } else {
+        var keyArr = Object.keys(input);
+
+        if (keyArr.length === 0) {
+            return {};
+        }
+    
+        var curObj = {};
+    
+        keyArr.forEach(function(key) {
+            if (typeof input[key] === 'object') {
+                curObj[key] = clone(input[key]);
+            } else {
+                curObj[key] = input[key];
+            }
+        });
+    
+        return curObj;
+    }
 };
